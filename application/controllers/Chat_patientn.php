@@ -110,10 +110,10 @@ class Chat_patientn extends MY_Controller {
                                case '1c':
                                    if($oldMsgCount>10 && $count_1c>3 && $row->common_option!='A'){
                                        if($is_old=='Yes'){
-                                        $count1b=2;
+                                        $count1b=3;
                                          $subparent='1b';
                                        }else{
-                                           $count1a=2;
+                                           $count1a=3;
                                             $subparent='1a';
                                        }
                                    }
@@ -241,6 +241,8 @@ class Chat_patientn extends MY_Controller {
                                     if($count1a==1){
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin($subparent,$count1a+1,1);
                                     }elseif($count1a==2){
+                                        $data['question']=$this->chat_modeln->getquestionBytypeadmin('1a',3,1);
+                                    }elseif($count1a==3){
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin('2a',1,1);
                                         //$data['question2']=$this->chat_modeln->getquestionBytypeadmin('2a',2,1);
                                         $data['option']=$this->chat_modeln->getOptionBytypeadmin($data['question']->ID,1);
@@ -405,6 +407,8 @@ class Chat_patientn extends MY_Controller {
                                     if($count1b==1){
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin($subparent,$count1b+1,2);
                                     }elseif($count1b==2){
+                                        $data['question']=$this->chat_modeln->getquestionBytypeadmin('1b',3,2);
+                                    }elseif($count1b==3){
                                         //$data['question']=$this->chat_modeln->getquestionBytypeadmin('2b',1,2);
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin('2b',2,2);
                                         $data['option']=$this->chat_modeln->getOptionBytypeadmin($data['question']->ID,1);
