@@ -627,7 +627,7 @@ class Chat_patientn extends MY_Controller {
                         "is_support"=>0
                         );
                 $this->chat_modeln->SaveUserChats($data);
-                if($countsubparent>=12){
+                if($countsubparent>=6){
                     $ifexist=$this->chat_modeln->FindUserQuery($message,$username);
                     if($ifexist!=''){
                     $data=  array(
