@@ -1,0 +1,184 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Feedback_model extends CI_Model {
+    public $MESSAGE;
+    public function __construct(){
+        parent::__construct();
+        $this->MESSAGE= $this->config->item('MESSAGE');
+        $this->main_table="patient_feedback";
+    }
+
+    public function getData($is_active=''){
+       $this->db->select("F.*,CONCAT(P.title, ' ', P.first_name, ' ', P.middle_name, ' ', P.last_name) AS name,P.contact_number,P.email_id");
+        $this->db->from($this->main_table." as F");
+        $this->db->join("patient as P", "P.username=F.username", "LEFT");
+        if($is_active==1)$this->db->where("F.show_status",1);
+        $this->db->where("F.is_deleted",0);
+        $this->db->order_by('F.date','DESC');
+        $result=$this->db->get()->result();
+      
+        return $result;
+    }
+    
+    public function getFeedbackData($is_active=''){
+       $this->db->select("count(ID) as total_feedback, SUM(waiting_time_hospital) as waiting_time_hospital,SUM(medical_facility_equipment) as medical_facility_equipment,SUM(friendiness_privacy) as friendiness_privacy,SUM(quality_medical_examination) as quality_medical_examination,SUM(overall_service_exclude_exam) as overall_service_exclude_exam");
+        $this->db->from($this->main_table);
+        if($is_active==1)$this->db->where("show_status",1);
+        $this->db->where("is_deleted",0);
+        $result=$this->db->get()->row();
+        return $result;
+    }
+    
+    public function getFeedbackremaks($is_active=''){
+       $this->db->select("ID,feedback_remark,special_recommend,show_status");
+        $this->db->from($this->main_table);
+        if($is_active==1)$this->db->where("show_status",1);
+        $this->db->where("is_deleted",0);
+        $result=$this->db->get()->result();
+        return $result;
+    }
+    
+    public function getFeedbackDataRateWise($is_active=''){
+       $this->db->select("(select count(waiting_time_hospital) FROM `hms_patient_feedback` WHERE waiting_time_hospital=1) as waiting_time_rate1,(select count(waiting_time_hospital) FROM `hms_patient_feedback` WHERE waiting_time_hospital=2) as waiting_time_rate2,(select count(waiting_time_hospital) FROM `hms_patient_feedback` WHERE waiting_time_hospital=3) as waiting_time_rate3,(select count(waiting_time_hospital) FROM `hms_patient_feedback` WHERE waiting_time_hospital=4) as waiting_time_rate4,(select count(waiting_time_hospital) FROM `hms_patient_feedback` WHERE waiting_time_hospital=5) as waiting_time_rate5,"
+               . "(select count(medical_facility_equipment) FROM `hms_patient_feedback` WHERE medical_facility_equipment=1) as medical_facility_rate1,(select count(medical_facility_equipment) FROM `hms_patient_feedback` WHERE medical_facility_equipment=2) as medical_facility_rate2,(select count(medical_facility_equipment) FROM `hms_patient_feedback` WHERE medical_facility_equipment=3) as medical_facility_rate3,(select count(medical_facility_equipment) FROM `hms_patient_feedback` WHERE medical_facility_equipment=4) as medical_facility_rate4,(select count(medical_facility_equipment) FROM `hms_patient_feedback` WHERE medical_facility_equipment=5) as medical_facility_rate5,"
+               . "(select count(friendiness_privacy) FROM `hms_patient_feedback` WHERE friendiness_privacy=1) as friendiness_privacy_rate1,(select count(friendiness_privacy) FROM `hms_patient_feedback` WHERE friendiness_privacy=2) as friendiness_privacy_rate2,(select count(friendiness_privacy) FROM `hms_patient_feedback` WHERE friendiness_privacy=3) as friendiness_privacy_rate3,(select count(friendiness_privacy) FROM `hms_patient_feedback` WHERE friendiness_privacy=4) as friendiness_privacy_rate4,(select count(friendiness_privacy) FROM `hms_patient_feedback` WHERE friendiness_privacy=5) as friendiness_privacy_rate5,"
+               . "(select count(quality_medical_examination) FROM `hms_patient_feedback` WHERE quality_medical_examination=1) as quality_medical_examination_rate1,(select count(quality_medical_examination) FROM `hms_patient_feedback` WHERE quality_medical_examination=2) as quality_medical_examination_rate2,(select count(quality_medical_examination) FROM `hms_patient_feedback` WHERE quality_medical_examination=3) as quality_medical_examination_rate3,(select count(quality_medical_examination) FROM `hms_patient_feedback` WHERE quality_medical_examination=4) as quality_medical_examination_rate4,(select count(quality_medical_examination) FROM `hms_patient_feedback` WHERE quality_medical_examination=5) as quality_medical_examination_rate5,"
+               . "(select count(overall_service_exclude_exam) FROM `hms_patient_feedback` WHERE overall_service_exclude_exam=1) as overall_service_exclude_exam_rate1,(select count(overall_service_exclude_exam) FROM `hms_patient_feedback` WHERE overall_service_exclude_exam=2) as overall_service_exclude_exam_rate2,(select count(overall_service_exclude_exam) FROM `hms_patient_feedback` WHERE overall_service_exclude_exam=3) as overall_service_exclude_exam_rate3,(select count(overall_service_exclude_exam) FROM `hms_patient_feedback` WHERE overall_service_exclude_exam=4) as overall_service_exclude_exam_rate4,(select count(overall_service_exclude_exam) FROM `hms_patient_feedback` WHERE overall_service_exclude_exam=5) as overall_service_exclude_exam_rate5");
+        $this->db->from($this->main_table);
+        if($is_active==1)$this->db->where("show_status",1);
+        $this->db->where("is_deleted",0);
+        $result=$this->db->get()->row();
+        //print_r($result);die;
+        return $result;
+    }
+    public function getFeedbackDataRateWise_services($is_active=''){
+        //all services in one query. 1.Parking, 2.Luggage, 3.Restaurant,4.In-patient service
+       $this->db->select("(select SUM(parking_friendiness) FROM `hms_patient_feedback_services` where parking_friendiness!=0 ) as sum_parking_friendiness,(select count(`parking_friendiness`) from `hms_patient_feedback_services` WHERE `parking_friendiness`!=0) as total_parking_feedback,(select count(parking_friendiness) FROM `hms_patient_feedback_services` WHERE parking_friendiness=1) as parking_friendiness_rate1,(select count(parking_friendiness) FROM `hms_patient_feedback_services` WHERE parking_friendiness=2) as parking_friendiness_rate2,(select count(parking_friendiness) FROM `hms_patient_feedback_services` WHERE parking_friendiness=3) as parking_friendiness_rate3,(select count(parking_friendiness) FROM `hms_patient_feedback_services` WHERE parking_friendiness=4) as parking_friendiness_rate4,(select count(parking_friendiness) FROM `hms_patient_feedback_services` WHERE parking_friendiness=5) as parking_friendiness_rate5,"
+               ."(select SUM(parking_staff_attitude) FROM `hms_patient_feedback_services` where parking_staff_attitude!=0 ) as sum_parking_staff_attitude,(select count(`parking_staff_attitude`) from `hms_patient_feedback_services` WHERE `parking_staff_attitude`!=0) as total_parking_staff_attitude,(select count(parking_staff_attitude) FROM `hms_patient_feedback_services` WHERE parking_staff_attitude=1) as parking_staff_attitude_rate1,(select count(parking_staff_attitude) FROM `hms_patient_feedback_services` WHERE parking_staff_attitude=2) as parking_staff_attitude_rate2,(select count(parking_staff_attitude) FROM `hms_patient_feedback_services` WHERE parking_staff_attitude=3) as parking_staff_attitude_rate3,(select count(parking_staff_attitude) FROM `hms_patient_feedback_services` WHERE parking_staff_attitude=4) as parking_staff_attitude_rate4,(select count(parking_staff_attitude) FROM `hms_patient_feedback_services` WHERE parking_staff_attitude=5) as parking_staff_attitude_rate5,"
+               ."(select SUM(parking_staff_spacous) FROM `hms_patient_feedback_services` where parking_staff_spacous!=0 ) as sum_parking_staff_spacous,(select count(`parking_staff_spacous`) from `hms_patient_feedback_services` WHERE `parking_staff_spacous`!=0) as total_parking_staff_spacous,(select count(parking_staff_spacous) FROM `hms_patient_feedback_services` WHERE parking_staff_spacous=1) as parking_staff_spacous_rate1,(select count(parking_staff_spacous) FROM `hms_patient_feedback_services` WHERE parking_staff_spacous=2) as parking_staff_spacous_rate2,(select count(parking_staff_spacous) FROM `hms_patient_feedback_services` WHERE parking_staff_spacous=3) as parking_staff_spacous_rate3,(select count(parking_staff_spacous) FROM `hms_patient_feedback_services` WHERE parking_staff_spacous=4) as parking_staff_spacous_rate4,(select count(parking_staff_spacous) FROM `hms_patient_feedback_services` WHERE parking_staff_spacous=5) as parking_staff_spacous_rate5,"
+               //luggage_prompt
+               ."(select SUM(luggage_prompt) FROM `hms_patient_feedback_services` where luggage_prompt!=0 ) as sum_luggage_prompt,(select count(`luggage_prompt`) from `hms_patient_feedback_services` WHERE `luggage_prompt`!=0) as total_luggage_prompt,(select count(luggage_prompt) FROM `hms_patient_feedback_services` WHERE luggage_prompt=1) as luggage_prompt_rate1,(select count(luggage_prompt) FROM `hms_patient_feedback_services` WHERE luggage_prompt=2) as luggage_prompt_rate2,(select count(luggage_prompt) FROM `hms_patient_feedback_services` WHERE luggage_prompt=3) as luggage_prompt_rate3,(select count(luggage_prompt) FROM `hms_patient_feedback_services` WHERE luggage_prompt=4) as luggage_prompt_rate4,(select count(luggage_prompt) FROM `hms_patient_feedback_services` WHERE luggage_prompt=5) as luggage_prompt_rate5,"
+               //luggage_attitude
+               ."(select SUM(luggage_attitude) FROM `hms_patient_feedback_services` where luggage_attitude!=0 ) as sum_luggage_attitude,(select count(`luggage_attitude`) from `hms_patient_feedback_services` WHERE `luggage_attitude`!=0) as total_luggage_attitude,(select count(luggage_attitude) FROM `hms_patient_feedback_services` WHERE luggage_attitude=1) as luggage_attitude_rate1,(select count(luggage_attitude) FROM `hms_patient_feedback_services` WHERE luggage_attitude=2) as luggage_attitude_rate2,(select count(luggage_attitude) FROM `hms_patient_feedback_services` WHERE luggage_attitude=3) as luggage_attitude_rate3,(select count(luggage_attitude) FROM `hms_patient_feedback_services` WHERE luggage_attitude=4) as luggage_attitude_rate4,(select count(luggage_attitude) FROM `hms_patient_feedback_services` WHERE luggage_attitude=5) as luggage_attitude_rate5,"
+               //luggage_communication
+               ."(select SUM(luggage_communication) FROM `hms_patient_feedback_services` where luggage_communication!=0 ) as sum_luggage_communication,(select count(`luggage_communication`) from `hms_patient_feedback_services` WHERE `luggage_communication`!=0) as total_luggage_communication,(select count(luggage_communication) FROM `hms_patient_feedback_services` WHERE luggage_communication=1) as luggage_communication_rate1,(select count(luggage_communication) FROM `hms_patient_feedback_services` WHERE luggage_communication=2) as luggage_communication_rate2,(select count(luggage_communication) FROM `hms_patient_feedback_services` WHERE luggage_communication=3) as luggage_communication_rate3,(select count(luggage_communication) FROM `hms_patient_feedback_services` WHERE luggage_communication=4) as luggage_communication_rate4,(select count(luggage_communication) FROM `hms_patient_feedback_services` WHERE luggage_communication=5) as luggage_communication_rate5,"
+               
+                //resaurant_quality_gfloor
+               ."(select SUM(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` where resaurant_quality_gfloor!=0 ) as sum_resaurant_quality_gfloor,(select count(`resaurant_quality_gfloor`) from `hms_patient_feedback_services` WHERE `resaurant_quality_gfloor`!=0) as total_resaurant_quality_gfloor,(select count(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_gfloor=1) as resaurant_quality_gfloor_rate1,(select count(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_gfloor=2) as resaurant_quality_gfloor_rate2,(select count(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_gfloor=3) as resaurant_quality_gfloor_rate3,(select count(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_gfloor=4) as resaurant_quality_gfloor_rate4,(select count(resaurant_quality_gfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_gfloor=5) as resaurant_quality_gfloor_rate5,"
+               //resaurant_quality_1stfloor
+               ."(select SUM(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` where resaurant_quality_1stfloor!=0 ) as sum_resaurant_quality_1stfloor,(select count(`resaurant_quality_1stfloor`) from `hms_patient_feedback_services` WHERE `resaurant_quality_1stfloor`!=0) as total_resaurant_quality_1stfloor,(select count(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_1stfloor=1) as resaurant_quality_1stfloor_rate1,(select count(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_1stfloor=2) as resaurant_quality_1stfloor_rate2,(select count(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_1stfloor=3) as resaurant_quality_1stfloor_rate3,(select count(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_1stfloor=4) as resaurant_quality_1stfloor_rate4,(select count(resaurant_quality_1stfloor) FROM `hms_patient_feedback_services` WHERE resaurant_quality_1stfloor=5) as resaurant_quality_1stfloor_rate5,"
+               //resaurant_quality_inpatient
+               ."(select SUM(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` where resaurant_quality_inpatient!=0 ) as sum_resaurant_quality_inpatient,(select count(`resaurant_quality_inpatient`) from `hms_patient_feedback_services` WHERE `resaurant_quality_inpatient`!=0) as total_resaurant_quality_inpatient,(select count(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` WHERE resaurant_quality_inpatient=1) as resaurant_quality_inpatient_rate1,(select count(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` WHERE resaurant_quality_inpatient=2) as resaurant_quality_inpatient_rate2,(select count(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` WHERE resaurant_quality_inpatient=3) as resaurant_quality_inpatient_rate3,(select count(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` WHERE resaurant_quality_inpatient=4) as resaurant_quality_inpatient_rate4,(select count(resaurant_quality_inpatient) FROM `hms_patient_feedback_services` WHERE resaurant_quality_inpatient=5) as resaurant_quality_inpatient_rate5,"
+               
+                //inpatient_cleaniness
+               ."(select SUM(inpatient_cleaniness) FROM `hms_patient_feedback_services` where inpatient_cleaniness!=0 ) as sum_inpatient_cleaniness,(select count(`inpatient_cleaniness`) from `hms_patient_feedback_services` WHERE `inpatient_cleaniness`!=0) as total_inpatient_cleaniness,(select count(inpatient_cleaniness) FROM `hms_patient_feedback_services` WHERE inpatient_cleaniness=1) as inpatient_cleaniness_rate1,(select count(inpatient_cleaniness) FROM `hms_patient_feedback_services` WHERE inpatient_cleaniness=2) as inpatient_cleaniness_rate2,(select count(inpatient_cleaniness) FROM `hms_patient_feedback_services` WHERE inpatient_cleaniness=3) as inpatient_cleaniness_rate3,(select count(inpatient_cleaniness) FROM `hms_patient_feedback_services` WHERE inpatient_cleaniness=4) as inpatient_cleaniness_rate4,(select count(inpatient_cleaniness) FROM `hms_patient_feedback_services` WHERE inpatient_cleaniness=5) as inpatient_cleaniness_rate5,"
+               //inpatient_attitude
+               ."(select SUM(inpatient_attitude) FROM `hms_patient_feedback_services` where inpatient_attitude!=0 ) as sum_inpatient_attitude,(select count(`inpatient_attitude`) from `hms_patient_feedback_services` WHERE `inpatient_attitude`!=0) as total_inpatient_attitude,(select count(inpatient_attitude) FROM `hms_patient_feedback_services` WHERE inpatient_attitude=1) as inpatient_attitude_rate1,(select count(inpatient_attitude) FROM `hms_patient_feedback_services` WHERE inpatient_attitude=2) as inpatient_attitude_rate2,(select count(inpatient_attitude) FROM `hms_patient_feedback_services` WHERE inpatient_attitude=3) as inpatient_attitude_rate3,(select count(inpatient_attitude) FROM `hms_patient_feedback_services` WHERE inpatient_attitude=4) as inpatient_attitude_rate4,(select count(inpatient_attitude) FROM `hms_patient_feedback_services` WHERE inpatient_attitude=5) as inpatient_attitude_rate5,"
+               //inpatient_privacy
+               ."(select SUM(inpatient_privacy) FROM `hms_patient_feedback_services` where inpatient_privacy!=0 ) as sum_inpatient_privacy,(select count(`inpatient_privacy`) from `hms_patient_feedback_services` WHERE `inpatient_privacy`!=0) as total_inpatient_privacy,(select count(inpatient_privacy) FROM `hms_patient_feedback_services` WHERE inpatient_privacy=1) as inpatient_privacy_rate1,(select count(inpatient_privacy) FROM `hms_patient_feedback_services` WHERE inpatient_privacy=2) as inpatient_privacy_rate2,(select count(inpatient_privacy) FROM `hms_patient_feedback_services` WHERE inpatient_privacy=3) as inpatient_privacy_rate3,(select count(inpatient_privacy) FROM `hms_patient_feedback_services` WHERE inpatient_privacy=4) as inpatient_privacy_rate4,(select count(inpatient_privacy) FROM `hms_patient_feedback_services` WHERE inpatient_privacy=5) as inpatient_privacy_rate5,"
+               
+               );
+        
+       $this->db->from('patient_feedback_services');
+        if($is_active==1)$this->db->where("show_status",1);
+        $this->db->where("is_deleted",0);
+        $result=$this->db->get()->row();
+        //print_r($result);die;
+        return $result;
+    }
+    public function getFeedbackDataRateWise_medicalStaff($is_active=''){
+       $this->db->select(
+               //doctor_friendiness
+               "(select SUM(doctor_friendiness) FROM `hms_patient_feedback_medical_staff` where doctor_friendiness!=0 ) as sum_doctor_friendiness,(select count(`doctor_friendiness`) from `hms_patient_feedback_medical_staff` WHERE `doctor_friendiness`!=0) as total_doctor_friendiness,(select count(doctor_friendiness) FROM `hms_patient_feedback_services` WHERE doctor_friendiness=1) as doctor_friendiness_rate1,(select count(doctor_friendiness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_friendiness=2) as doctor_friendiness_rate2,(select count(doctor_friendiness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_friendiness=3) as doctor_friendiness_rate3,(select count(doctor_friendiness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_friendiness=4) as doctor_friendiness_rate4,(select count(doctor_friendiness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_friendiness=5) as doctor_friendiness_rate5,"
+                //doctor_understandable
+               ."(select SUM(doctor_understandable) FROM `hms_patient_feedback_medical_staff` where doctor_understandable!=0 ) as sum_doctor_understandable,(select count(`doctor_understandable`) from `hms_patient_feedback_medical_staff` WHERE `doctor_understandable`!=0) as total_doctor_understandable,(select count(doctor_understandable) FROM `hms_patient_feedback_services` WHERE doctor_understandable=1) as doctor_understandable_rate1,(select count(doctor_understandable) FROM `hms_patient_feedback_medical_staff` WHERE doctor_understandable=2) as doctor_understandable_rate2,(select count(doctor_understandable) FROM `hms_patient_feedback_medical_staff` WHERE doctor_understandable=3) as doctor_understandable_rate3,(select count(doctor_understandable) FROM `hms_patient_feedback_medical_staff` WHERE doctor_understandable=4) as doctor_understandable_rate4,(select count(doctor_understandable) FROM `hms_patient_feedback_medical_staff` WHERE doctor_understandable=5) as doctor_understandable_rate5,"
+               //doctor_effectiveness
+               ."(select SUM(doctor_effectiveness) FROM `hms_patient_feedback_medical_staff` where doctor_effectiveness!=0 ) as sum_doctor_effectiveness,(select count(`doctor_effectiveness`) from `hms_patient_feedback_medical_staff` WHERE `doctor_effectiveness`!=0) as total_doctor_effectiveness,(select count(doctor_effectiveness) FROM `hms_patient_feedback_services` WHERE doctor_effectiveness=1) as doctor_effectiveness_rate1,(select count(doctor_effectiveness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_effectiveness=2) as doctor_effectiveness_rate2,(select count(doctor_effectiveness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_effectiveness=3) as doctor_effectiveness_rate3,(select count(doctor_effectiveness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_effectiveness=4) as doctor_effectiveness_rate4,(select count(doctor_effectiveness) FROM `hms_patient_feedback_medical_staff` WHERE doctor_effectiveness=5) as doctor_effectiveness_rate5,"
+               //doctor_prompt
+               ."(select SUM(doctor_prompt) FROM `hms_patient_feedback_medical_staff` where doctor_prompt!=0 ) as sum_doctor_prompt,(select count(`doctor_prompt`) from `hms_patient_feedback_medical_staff` WHERE `doctor_prompt`!=0) as total_doctor_prompt,(select count(doctor_prompt) FROM `hms_patient_feedback_services` WHERE doctor_prompt=1) as doctor_prompt_rate1,(select count(doctor_prompt) FROM `hms_patient_feedback_medical_staff` WHERE doctor_prompt=2) as doctor_prompt_rate2,(select count(doctor_prompt) FROM `hms_patient_feedback_medical_staff` WHERE doctor_prompt=3) as doctor_prompt_rate3,(select count(doctor_prompt) FROM `hms_patient_feedback_medical_staff` WHERE doctor_prompt=4) as doctor_prompt_rate4,(select count(doctor_prompt) FROM `hms_patient_feedback_medical_staff` WHERE doctor_prompt=5) as doctor_prompt_rate5,"
+               
+               //nurse_attitude
+               ."(select SUM(nurse_attitude) FROM `hms_patient_feedback_medical_staff` where nurse_attitude!=0 ) as sum_nurse_attitude,(select count(`nurse_attitude`) from `hms_patient_feedback_medical_staff` WHERE `nurse_attitude`!=0) as total_nurse_attitude,(select count(nurse_attitude) FROM `hms_patient_feedback_services` WHERE nurse_attitude=1) as nurse_attitude_rate1,(select count(nurse_attitude) FROM `hms_patient_feedback_medical_staff` WHERE nurse_attitude=2) as nurse_attitude_rate2,(select count(nurse_attitude) FROM `hms_patient_feedback_medical_staff` WHERE nurse_attitude=3) as nurse_attitude_rate3,(select count(nurse_attitude) FROM `hms_patient_feedback_medical_staff` WHERE nurse_attitude=4) as nurse_attitude_rate4,(select count(nurse_attitude) FROM `hms_patient_feedback_medical_staff` WHERE nurse_attitude=5) as nurse_attitude_rate5,"
+               //nurse_understandable
+               ."(select SUM(nurse_understandable) FROM `hms_patient_feedback_medical_staff` where nurse_understandable!=0 ) as sum_nurse_understandable,(select count(`nurse_understandable`) from `hms_patient_feedback_medical_staff` WHERE `nurse_understandable`!=0) as total_nurse_understandable,(select count(nurse_understandable) FROM `hms_patient_feedback_services` WHERE nurse_understandable=1) as nurse_understandable_rate1,(select count(nurse_understandable) FROM `hms_patient_feedback_medical_staff` WHERE nurse_understandable=2) as nurse_understandable_rate2,(select count(nurse_understandable) FROM `hms_patient_feedback_medical_staff` WHERE nurse_understandable=3) as nurse_understandable_rate3,(select count(nurse_understandable) FROM `hms_patient_feedback_medical_staff` WHERE nurse_understandable=4) as nurse_understandable_rate4,(select count(nurse_understandable) FROM `hms_patient_feedback_medical_staff` WHERE nurse_understandable=5) as nurse_understandable_rate5,"
+                //nurse_skill
+               ."(select SUM(nurse_skill) FROM `hms_patient_feedback_medical_staff` where nurse_skill!=0 ) as sum_nurse_skill,(select count(`nurse_skill`) from `hms_patient_feedback_medical_staff` WHERE `nurse_skill`!=0) as total_nurse_skill,(select count(nurse_skill) FROM `hms_patient_feedback_services` WHERE nurse_skill=1) as nurse_skill_rate1,(select count(nurse_skill) FROM `hms_patient_feedback_medical_staff` WHERE nurse_skill=2) as nurse_skill_rate2,(select count(nurse_skill) FROM `hms_patient_feedback_medical_staff` WHERE nurse_skill=3) as nurse_skill_rate3,(select count(nurse_skill) FROM `hms_patient_feedback_medical_staff` WHERE nurse_skill=4) as nurse_skill_rate4,(select count(nurse_skill) FROM `hms_patient_feedback_medical_staff` WHERE nurse_skill=5) as nurse_skill_rate5,"
+                //nurse_prompt
+               ."(select SUM(nurse_prompt) FROM `hms_patient_feedback_medical_staff` where nurse_prompt!=0 ) as sum_nurse_prompt,(select count(`nurse_prompt`) from `hms_patient_feedback_medical_staff` WHERE `nurse_prompt`!=0) as total_nurse_prompt,(select count(nurse_prompt) FROM `hms_patient_feedback_services` WHERE nurse_prompt=1) as nurse_prompt_rate1,(select count(nurse_prompt) FROM `hms_patient_feedback_medical_staff` WHERE nurse_prompt=2) as nurse_prompt_rate2,(select count(nurse_prompt) FROM `hms_patient_feedback_medical_staff` WHERE nurse_prompt=3) as nurse_prompt_rate3,(select count(nurse_prompt) FROM `hms_patient_feedback_medical_staff` WHERE nurse_prompt=4) as nurse_prompt_rate4,(select count(nurse_prompt) FROM `hms_patient_feedback_medical_staff` WHERE nurse_prompt=5) as nurse_prompt_rate5,"
+               
+               //cus_service_attitude
+               ."(select SUM(cus_service_attitude) FROM `hms_patient_feedback_medical_staff` where cus_service_attitude!=0 ) as sum_cus_service_attitude,(select count(`cus_service_attitude`) from `hms_patient_feedback_medical_staff` WHERE `cus_service_attitude`!=0) as total_cus_service_attitude,(select count(cus_service_attitude) FROM `hms_patient_feedback_services` WHERE cus_service_attitude=1) as cus_service_attitude_rate1,(select count(cus_service_attitude) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_attitude=2) as cus_service_attitude_rate2,(select count(cus_service_attitude) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_attitude=3) as cus_service_attitude_rate3,(select count(cus_service_attitude) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_attitude=4) as cus_service_attitude_rate4,(select count(cus_service_attitude) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_attitude=5) as cus_service_attitude_rate5,"
+               //cus_service_understandable
+               ."(select SUM(cus_service_understandable) FROM `hms_patient_feedback_medical_staff` where cus_service_understandable!=0 ) as sum_cus_service_understandable,(select count(`cus_service_understandable`) from `hms_patient_feedback_medical_staff` WHERE `cus_service_understandable`!=0) as total_cus_service_understandable,(select count(cus_service_understandable) FROM `hms_patient_feedback_services` WHERE cus_service_understandable=1) as cus_service_understandable_rate1,(select count(cus_service_understandable) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_understandable=2) as cus_service_understandable_rate2,(select count(cus_service_understandable) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_understandable=3) as cus_service_understandable_rate3,(select count(cus_service_understandable) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_understandable=4) as cus_service_understandable_rate4,(select count(cus_service_understandable) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_understandable=5) as cus_service_understandable_rate5,"
+                //cus_service_prompt
+               ."(select SUM(cus_service_prompt) FROM `hms_patient_feedback_medical_staff` where cus_service_prompt!=0 ) as sum_cus_service_prompt,(select count(`cus_service_prompt`) from `hms_patient_feedback_medical_staff` WHERE `cus_service_prompt`!=0) as total_cus_service_prompt,(select count(cus_service_prompt) FROM `hms_patient_feedback_services` WHERE cus_service_prompt=1) as cus_service_prompt_rate1,(select count(cus_service_prompt) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_prompt=2) as cus_service_prompt_rate2,(select count(cus_service_prompt) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_prompt=3) as cus_service_prompt_rate3,(select count(cus_service_prompt) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_prompt=4) as cus_service_prompt_rate4,(select count(cus_service_prompt) FROM `hms_patient_feedback_medical_staff` WHERE cus_service_prompt=5) as cus_service_prompt_rate5,"
+                
+               //call_centre_prompt
+               ."(select SUM(call_centre_prompt) FROM `hms_patient_feedback_medical_staff` where call_centre_prompt!=0 ) as sum_call_centre_prompt,(select count(`call_centre_prompt`) from `hms_patient_feedback_medical_staff` WHERE `call_centre_prompt`!=0) as total_call_centre_prompt,(select count(call_centre_prompt) FROM `hms_patient_feedback_services` WHERE call_centre_prompt=1) as call_centre_prompt_rate1,(select count(call_centre_prompt) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_prompt=2) as call_centre_prompt_rate2,(select count(call_centre_prompt) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_prompt=3) as call_centre_prompt_rate3,(select count(call_centre_prompt) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_prompt=4) as call_centre_prompt_rate4,(select count(call_centre_prompt) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_prompt=5) as call_centre_prompt_rate5,"
+               //call_centre_understandable
+               ."(select SUM(call_centre_understandable) FROM `hms_patient_feedback_medical_staff` where call_centre_understandable!=0 ) as sum_call_centre_understandable,(select count(`call_centre_understandable`) from `hms_patient_feedback_medical_staff` WHERE `call_centre_understandable`!=0) as total_call_centre_understandable,(select count(call_centre_understandable) FROM `hms_patient_feedback_services` WHERE call_centre_understandable=1) as call_centre_understandable_rate1,(select count(call_centre_understandable) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_understandable=2) as call_centre_understandable_rate2,(select count(call_centre_understandable) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_understandable=3) as call_centre_understandable_rate3,(select count(call_centre_understandable) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_understandable=4) as call_centre_understandable_rate4,(select count(call_centre_understandable) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_understandable=5) as call_centre_understandable_rate5,"
+                //call_centre_voice
+               ."(select SUM(call_centre_voice) FROM `hms_patient_feedback_medical_staff` where call_centre_voice!=0 ) as sum_call_centre_voice,(select count(`call_centre_voice`) from `hms_patient_feedback_medical_staff` WHERE `call_centre_voice`!=0) as total_call_centre_voice,(select count(call_centre_voice) FROM `hms_patient_feedback_services` WHERE call_centre_voice=1) as call_centre_voice_rate1,(select count(call_centre_voice) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_voice=2) as call_centre_voice_rate2,(select count(call_centre_voice) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_voice=3) as call_centre_voice_rate3,(select count(call_centre_voice) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_voice=4) as call_centre_voice_rate4,(select count(call_centre_voice) FROM `hms_patient_feedback_medical_staff` WHERE call_centre_voice=5) as call_centre_voice_rate5,"
+                
+                
+               //pharmacist_attitude
+               ."(select SUM(pharmacist_attitude) FROM `hms_patient_feedback_medical_staff` where pharmacist_attitude!=0 ) as sum_pharmacist_attitude,(select count(`pharmacist_attitude`) from `hms_patient_feedback_medical_staff` WHERE `pharmacist_attitude`!=0) as total_pharmacist_attitude,(select count(pharmacist_attitude) FROM `hms_patient_feedback_services` WHERE pharmacist_attitude=1) as pharmacist_attitude_rate1,(select count(pharmacist_attitude) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_attitude=2) as pharmacist_attitude_rate2,(select count(pharmacist_attitude) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_attitude=3) as pharmacist_attitude_rate3,(select count(pharmacist_attitude) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_attitude=4) as pharmacist_attitude_rate4,(select count(pharmacist_attitude) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_attitude=5) as pharmacist_attitude_rate5,"
+               //pharmacist_understandable
+               ."(select SUM(pharmacist_understandable) FROM `hms_patient_feedback_medical_staff` where pharmacist_understandable!=0 ) as sum_pharmacist_understandable,(select count(`pharmacist_understandable`) from `hms_patient_feedback_medical_staff` WHERE `pharmacist_understandable`!=0) as total_pharmacist_understandable,(select count(pharmacist_understandable) FROM `hms_patient_feedback_services` WHERE pharmacist_understandable=1) as pharmacist_understandable_rate1,(select count(pharmacist_understandable) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_understandable=2) as pharmacist_understandable_rate2,(select count(pharmacist_understandable) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_understandable=3) as pharmacist_understandable_rate3,(select count(pharmacist_understandable) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_understandable=4) as pharmacist_understandable_rate4,(select count(pharmacist_understandable) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_understandable=5) as pharmacist_understandable_rate5,"
+                //pharmacist_prompt
+               ."(select SUM(pharmacist_prompt) FROM `hms_patient_feedback_medical_staff` where pharmacist_prompt!=0 ) as sum_pharmacist_prompt,(select count(`pharmacist_prompt`) from `hms_patient_feedback_medical_staff` WHERE `pharmacist_prompt`!=0) as total_pharmacist_prompt,(select count(pharmacist_prompt) FROM `hms_patient_feedback_services` WHERE pharmacist_prompt=1) as pharmacist_prompt_rate1,(select count(pharmacist_prompt) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_prompt=2) as pharmacist_prompt_rate2,(select count(pharmacist_prompt) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_prompt=3) as pharmacist_prompt_rate3,(select count(pharmacist_prompt) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_prompt=4) as pharmacist_prompt_rate4,(select count(pharmacist_prompt) FROM `hms_patient_feedback_medical_staff` WHERE pharmacist_prompt=5) as pharmacist_prompt_rate5,"
+                
+               );
+        $this->db->from('patient_feedback_medical_staff');
+        if($is_active==1)$this->db->where("show_status",1);
+        $this->db->where("is_deleted",0);
+        $result=$this->db->get()->row();
+        //print_r($result);die;
+        return $result;
+    }
+
+    public function loadDataById($ID=''){
+        $ID=(is_numeric($ID))?md5($ID):$ID;
+        $this->db->select("F.*,CONCAT(P.title, ' ', P.first_name, ' ', P.middle_name, ' ', P.last_name) AS name,P.contact_number,P.email_id");
+        $this->db->from($this->main_table." as F");
+        $this->db->join("patient as P", "P.username=F.username", "LEFT");
+        $this->db->where("MD5(F.ID)",$ID);
+        $result=$this->db->get()->row();
+        return $result;
+    }
+
+    public function delete_feedback_data($IDS=array()){
+        $IDS=(isset($_POST['IDS']))?$_POST['IDS']:$IDS;
+        $updateData=array('is_deleted'=>1);
+
+        // for user main table    
+        $this->db->where_in("MD5(ID)", $IDS);
+        $this->db->update($this->main_table,$updateData);
+        //$this->db->delete($this->main_table);
+        //end
+
+        echo "Feedback has been deleted successfully.";
+        return;
+    }
+    
+    public function hide(){
+        $id=$this->input->post('id');
+        if($this->db->update($this->main_table,array('show_status'=>0),array("ID"=>$id))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function show(){
+        $id=$this->input->post('id');
+        if($this->db->update($this->main_table,array('show_status'=>1),array("ID"=>$id))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+}
