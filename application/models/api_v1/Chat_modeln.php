@@ -336,12 +336,14 @@ class chat_modeln extends CI_Model {
         }
     }
     
-    function notAnsweredChatByAdmin($username){
+	function notAnsweredChatByAdmin($username){
+		$dateTimeMinus5Sec=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -60 seconds"));
         $this->db->select('*')->from('user_chats');
         $this->db->where('username',$username);
         $this->db->where('support_name','');
         $this->db->where('subparent','');
-        $this->db->where('date',date('Y-m-d'));
+        //$this->db->where('date',date('Y-m-d'));
+		$this->db->where('date_time>',$dateTimeMinus5Sec);
         $this->db->where('is_answered_support',0);
         $this->db->where('is_support',0);
         $query=$this->db->get();

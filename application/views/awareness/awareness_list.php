@@ -180,7 +180,7 @@
 					<td class="pre_css" style=" text-align: center;vertical-align: middle;"><?php echo ($data->file_type==1)?'Article':'Video clip';?></td>
 					<td style="text-align: center;">
                                             <?php if($data->awareness_image){ ($data->awareness_image)?$imgextention=explode('.',$data->awareness_image):array(); ?>
-                                            <?php if(in_array(end($imgextention),array('jpg','jpeg','png','gif'))){ ?>
+                                            <?php if(in_array(end($imgextention),array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF'))){ ?>
                                             <img width="100" height="60" class="img" src="<?php echo base_url().$data->awareness_image;?>" >
                                                 
                                                 <?php }else{

@@ -95,6 +95,7 @@ $route['v1/patient.api/update-password'] = 'api_v1/patient/update_patient_passwo
 $route['v1/patient.api/update-image'] = 'api_v1/patient/update_patient_image';
 $route['v1/patient.api/login'] = 'api_v1/patient/login';
 $route['v1/patient.api/login-social-media'] = 'api_v1/patient/checkLoginSocialMedia';	// for signin authontication via social sites
+$route['v1/patient.api/update-prn'] = 'api_v1/patient/update_patient_prn';
 $route['v1/patient.api/logout'] = 'api_v1/patient/logout';
 
 $route['v1/sub-patient.api/list'] = 'api_v1/sub_patient/get_list';

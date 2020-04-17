@@ -297,6 +297,7 @@ class Patient_model extends CI_Model {
         
         $this ->db->select('blood_group,glucose,heart_rate,blood_pressure,weight,height,bmi,allergies');
         $this->db->from($this->main_table);
+        $this->db->where("username",$username);
         $this->db->where("is_deleted",0);
         $result=$this->db->get()->row();
         return $result;
@@ -306,8 +307,7 @@ class Patient_model extends CI_Model {
         extract($_POST);
         // for security purpose we get ID by username
         $this ->db->select('ID');
-        $this->db->from($this->main_table);        $this->db->where("username",$username);
-
+        $this->db->from($this->main_table);
         $this->db->where("username",$username);
         $this->db->where("is_deleted",0);
         $this->db->where("show_status",1);
@@ -715,7 +715,6 @@ class Patient_model extends CI_Model {
 			$this->oracle_db->select("*");
 			$this->oracle_db->from("NOVA_PATIENT");
 			$this->oracle_db->like("PATIENT_NAME",$fullname);
-			$this->oracle_db->where("DOB !=","");
 			$this->oracle_db->where("DOB",$dob);
 			
 			if(is_numeric($result->username)){

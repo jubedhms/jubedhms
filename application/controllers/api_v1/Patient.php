@@ -743,6 +743,47 @@ class Patient extends  REST_Controller {
 	}
 
 	/*
+	* Method name: update_patient_prn
+	* Desc: update patient prn (true for accepted, false for denied)
+	* Input: token, username
+	*/
+	public function update_patient_prn_post()
+	{ 
+		if($_SERVER['REQUEST_METHOD'] == "POST"){
+        	// Get data
+			if(isset($_POST)){
+				$permission=false;
+				$token= isset($_POST['token']) ?($_POST['token']) : "";
+				$permission=$this->matchAppToken($token);
+				if($permission==true){	
+					$username= isset($_POST['username']) ?($_POST['username']) : "";
+					if($username!=''){
+						$PRN=$this->patient_model->update_prn_by_username($username);	
+						if($PRN!=''){
+							if($PRN == "Already Existed"){
+								$json = array("status" => 0, "message" => "Your PRN number has been existed already.");
+							}else{
+								$json = array("status" => 1, "message" => "Your PRN number has been updated.", "prn"=> $PRN);
+							}
+						}else{
+							$json = array("status" => 0, "message" => "PRN number has not been founded.");
+						}
+					}else{
+						$json = array("status" => 0, "message" => "Username has been empty.");
+					}
+				}else{
+					$json = array("status" => 0, "message" => "Token has been not matched.");
+				}	
+			}else{
+				$json = array("status" => 0, "message" => "Request has been uncompleted.");
+			}
+		}else{
+			$json = array("status" => 0, "message" => "Request method not accepted");
+		}
+		$this->response($json, REST_Controller::HTTP_OK);
+	}
+	
+	/*
 	* Method name: logout
 	* Desc: match existing Username and password status(true for accepted, false for denied)
 	* Input: token, username, password

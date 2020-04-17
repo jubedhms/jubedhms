@@ -22,7 +22,7 @@ class Doctor_model extends CI_Model {
 		$this->oracle_db->select("*");
 		$this->oracle_db->from("NOVA_DOCTOR");
 		if($mcr!='')$this->oracle_db->where("MCR_NO",$mcr);
-		if($maker_date!='')$this->oracle_db->where("SYNC_DATE",$maker_date);
+		//if($maker_date!='')$this->oracle_db->where("SYNC_DATE",$maker_date);
 		$result=$this->oracle_db->get()->result();
 		
 		if($result){
@@ -43,8 +43,8 @@ class Doctor_model extends CI_Model {
 				$grade= ($value->DOCTOR_GRADE_CODE!= NULL)?$value->DOCTOR_GRADE_CODE:'';
 				$hospital_location_id=1;
 				$default_room= ($value->DEFAULT_ROOM!= NULL)?$value->DEFAULT_ROOM:'';
-				$sync_date= ($value->SYNC_DATE!= NULL)?date("Y-m-d", strtotime($value->SYNC_DATE)):'';
-				$address_line1= ($value->HOME_ADDRESS!= NULL)?$value->HOME_ADDRESS:'';
+				$sync_date= $curr_date;//($value->SYNC_DATE!= NULL)?date("Y-m-d", strtotime($value->SYNC_DATE)):'';
+				//$address_line1= ($value->HOME_ADDRESS!= NULL)?$value->ADDRESS:'';
 				
 				// for check Doctor is belong or not
 				$this->db->select("ID,primary_specialty_code,specialty_code");
@@ -103,7 +103,7 @@ class Doctor_model extends CI_Model {
 		
 				$addressData=[
 						'doctor_id'=>$doctor_id,
-						'address_line1'=>$address_line1,
+						//'address_line1'=>$address_line1,
 						'updater_id'=>$LOGINID,
 						'updater_date'=>$curr_date
 					];

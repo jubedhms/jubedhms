@@ -177,7 +177,7 @@ class Doctor_model extends CI_Model {
 		$this->oracle_db->select("APPOINTMENT_TIME as appointment_time");
 		$this->oracle_db->from("NOVA_PATIENT_APPOINTMENT");
 		$this->oracle_db->where("APPOINTMENT_DATE",date('d-M-y',strtotime($date)));
-		$this->oracle_db->where('MCR',$doctor_mcr);
+		$this->oracle_db->where('MCR_NO',$doctor_mcr);
 		@$resultBookAappointmentHIS=$this->oracle_db->get()->result();	
 		
 		//echo "<pre>";print_r($resultBookAappointmentHIS);die;

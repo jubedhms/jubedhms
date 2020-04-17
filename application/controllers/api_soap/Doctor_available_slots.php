@@ -19,7 +19,7 @@ class Doctor_available_slots  extends CI_Controller {
 			$client=StartSoapClient($wsdl,$wsdlLocation);
 			//echo "<pre>";print_r($client);
 			
-			$date='29-Feb-2020';//date('Y-m-d');
+			$date=date('Y-m-d');
 			$time='';//'07:50 PM';//date('h:i A');
 			
 			$doctor_specialty='01';

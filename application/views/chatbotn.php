@@ -40,8 +40,8 @@
                                                 <!-- /.form-group -->
                                             </form>
                                         </div>
-                                        <!-- /.chatbox-search -->
-                                        <div class="chatbox-body scrollbar-enabled pr-0">
+                                        <!-- /.chatbox-search scrollbar-enabled pr-0-->
+                                        <div class="chatbox-body " style=" overflow-y: scroll !important;">
                                             <div class="user-list all_userList">
                                                 <div class="user-list-single">
                                                     <div class="row">

@@ -449,7 +449,7 @@ class Chatbotn extends  REST_Controller {
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin($subparent,$count1a+1,1);
                                     }elseif($count1a==2){
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin('2a',1,1);
-                                        $data['question2']=$this->chat_modeln->getquestionBytypeadmin('2a',2,1);
+                                        //$data['question2']=$this->chat_modeln->getquestionBytypeadmin('2a',2,1);
                                         $data['option']=$this->chat_modeln->getOptionBytypeadmin($data['question']->ID,1);
                                     }
                                     break;
@@ -549,7 +549,7 @@ class Chatbotn extends  REST_Controller {
                     $msg=end($arrdata);
                     $countsubparent=$this->chat_modeln->countPredefinedQuestion($username,$is_old);
                     //if($msg->date<date('Y-m-d') && count($arrdata)>=14){
-                        $timeMinus_10min=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -1 minutes"));
+                        $timeMinus_10min=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -2 minutes"));
                         if($msg->date_time<$timeMinus_10min && $countsubparent>=6){
                         //$data['question']=$this->chat_modeln->default_questionadmin();
                         if(date('H:i:s')>='00:00:00' && date('H:i:s')<'12:00:00'){//morning
@@ -611,8 +611,8 @@ class Chatbotn extends  REST_Controller {
                                     if($count1b==1){
                                         $data['question']=$this->chat_modeln->getquestionBytypeadmin($subparent,$count1b+1,2);
                                     }elseif($count1b==2){
-                                        $data['question']=$this->chat_modeln->getquestionBytypeadmin('2b',1,2);
-                                        $data['question2']=$this->chat_modeln->getquestionBytypeadmin('2b',2,2);
+                                        //$data['question']=$this->chat_modeln->getquestionBytypeadmin('2b',1,2);
+                                        $data['question']=$this->chat_modeln->getquestionBytypeadmin('2b',2,2);
                                         $data['option']=$this->chat_modeln->getOptionBytypeadmin($data['question']->ID,1);
                                     }
                                     break;
@@ -714,7 +714,7 @@ class Chatbotn extends  REST_Controller {
                         $msg=end($arrdata);
                         $countsubparent=$this->chat_modeln->countPredefinedQuestion($username,$is_old);
                         //if($msg->date<date('Y-m-d') && count($arrdata)>=14){
-                        $timeMinus_10min=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -1 minutes"));
+                        $timeMinus_10min=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -2 minutes"));
                         //echo $msg->date.' '.$msg->time;die;
                         if($msg->date_time<$timeMinus_10min && $countsubparent>=6){
                         //$data['question']=$this->chat_modeln->default_questionadmin();

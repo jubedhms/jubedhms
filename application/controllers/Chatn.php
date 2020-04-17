@@ -91,6 +91,7 @@ class Chatn extends MY_Controller {
             $message=trim($this->input->post('message'));
             $date=date('Y-m-d');
             $time=date('H:i:s A');
+			$date_time=date('Y-m-d H:i:s');
             //pick last question
             $exist_message=$this->chat_modeln->getLastQuery($username);
             if($exist_message!=''){
@@ -105,6 +106,7 @@ class Chatn extends MY_Controller {
                 "is_not_auto_reply"=>1,
                 "date"=>$date,
                 "time"=>$time,
+				"date_time"=>$date_time,
                 "is_seen"=>0,
                 "is_support"=>1
                 );
