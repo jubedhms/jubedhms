@@ -1,0 +1,47 @@
+
+.bcpicker-btn{
+    margin-left: 15px;
+    margin-top: 8px;
+    border-radius: 5px;
+    padding: 11px;
+}
+
+.bcpicker-fa{
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.color-picker{
+  width: 20px;
+  height: 20px;
+}
+			
+.bcPicker-picker{
+  width: 100%;
+  height: 100%;
+  position:  relative;
+  cursor: pointer;
+  border-radius:15px;
+
+}
+
+.bcPicker-palette{
+  width: 150px;
+  position: absolute;
+  top: 16px;
+  padding: 5px;
+  
+  border: 1px solid #efefef;
+  background-color: #fdfdfd;
+  z-index: 10;
+  display: none;
+}
+
+.bcPicker-palette > .bcPicker-color{
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  border-radius:15px;
+  display: inline-block;
+  border: 1px solid #efefef;
+}

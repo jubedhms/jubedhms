@@ -1,0 +1,2 @@
+0 * * * * wget -q -O /dev/null --timeout=3600 http://adminpanel.hanhphuchospital.com/send_advance_notification/send_lockscreen_notification
+0 * * * * wget -q -O /dev/null --timeout=3600 http://adminpanel.hanhphuchospital.com/send_advance_notification/count_send_notification

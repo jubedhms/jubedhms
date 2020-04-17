@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ax223="http://rpc.xml.coldfusion/xsd" xmlns:ns="http://ws.apache.org/axis2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://ws.apache.org/axis2">
+    <wsdl:types>
+        <xs:schema xmlns:ax224="http://rpc.xml.coldfusion/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ws.apache.org/axis2">
+            <xs:import namespace="http://rpc.xml.coldfusion/xsd"/>
+            <xs:element name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="CFCInvocationException" nillable="true" type="ax223:CFCInvocationException"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetDoctorAvailabilityData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="token_number" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="mcr" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="company_code" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="start_date" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetDoctorAvailabilityDataResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="document">
+                <xs:sequence>
+                    <xs:any/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://rpc.xml.coldfusion/xsd">
+            <xs:complexType name="CFCInvocationException">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="StructDelegate">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="entries" nillable="true" type="ax223:EntryDelegate"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="EntryDelegate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="key" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="value" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="QueryBean">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="columnList" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="data" nillable="true" type="ax223:ArrayOfObject"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfObject">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DocumentDelegate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="document" nillable="true" type="ns:document"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayDelegate">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="array" nillable="true" type="xs:anyType"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="GetDoctorAvailabilityDataRequest">
+        <wsdl:part name="parameters" element="ns:GetDoctorAvailabilityData"/>
+    </wsdl:message>
+    <wsdl:message name="GetDoctorAvailabilityDataResponse">
+        <wsdl:part name="parameters" element="ns:GetDoctorAvailabilityDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException">
+        <wsdl:part name="parameters" element="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException"/>
+    </wsdl:message>
+    <wsdl:portType name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcPortType">
+        <wsdl:operation name="GetDoctorAvailabilityData">
+            <wsdl:input message="ns:GetDoctorAvailabilityDataRequest" wsaw:Action="urn:GetDoctorAvailabilityData"/>
+            <wsdl:output message="ns:GetDoctorAvailabilityDataResponse" wsaw:Action="urn:GetDoctorAvailabilityDataResponse"/>
+            <wsdl:fault message="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException" name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException" wsaw:Action="urn:GetDoctorAvailabilityDatahpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcSoap11Binding" type="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="GetDoctorAvailabilityData">
+            <soap:operation soapAction="urn:GetDoctorAvailabilityData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException">
+                <soap:fault use="literal" name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcSoap12Binding" type="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="GetDoctorAvailabilityData">
+            <soap12:operation soapAction="urn:GetDoctorAvailabilityData" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException">
+                <soap12:fault use="literal" name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcCFCInvocationException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfc">
+        <wsdl:port name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcHttpSoap11Endpoint" binding="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcSoap11Binding">
+            <soap:address location="http://hpuat01:80/hpih_uat/web_services/APPOINTMENT/GetDoctorAvailabilityData.cfc"/>
+        </wsdl:port>
+        <wsdl:port name="hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcHttpSoap12Endpoint" binding="ns:hpih_uat.web_services.APPOINTMENT.GetDoctorAvailabilityData.cfcSoap12Binding">
+            <soap12:address location="http://hpuat01:80/hpih_uat/web_services/APPOINTMENT/GetDoctorAvailabilityData.cfc"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
+
+ 
+  
+  
