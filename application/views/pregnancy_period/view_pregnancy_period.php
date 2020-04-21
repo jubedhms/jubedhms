@@ -721,7 +721,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
                                                                 <?php }else{ ?>
                                                             <a href="javascript:void(0)" style="cursor:auto;">
                                                                     <?php ($details->pregnancy_period_image)?$imgextention=explode('.',$details->pregnancy_period_image):array(); ?>
-                                                                    <?php if(in_array(end($imgextention),array('jpg','jpeg','png','gif'))){ ?>
+                                                                    <?php if(in_array(end($imgextention),array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF'))){ ?>
                                                                     <input type="hidden" class="srcimg" value="<?=base_url().'assets/img/icon/not-available.jpg';?>">
                                                                     <img style="width: 100%;height: 150px;" class="img imageVideo" src="<?=(getFieldVal('pregnancy_period_image',$details)!='')?base_url().getFieldVal('pregnancy_period_image',$details):base_url().'assets/img/icon/not-available.jpg';?>" >
                                                                         <div class="iframediv">

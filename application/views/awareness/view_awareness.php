@@ -727,7 +727,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
                                                                 <?php }else{ ?>
                                                             <a href="javascript:void(0)" style="cursor:auto;">
                                                                     <?php isset($details->awareness_image)?$imgextention=explode('.',$details->awareness_image):array(); ?>
-                                                                    <?php if(in_array(end($imgextention),array('jpg','jpeg','png','gif')) || ($details->file_type==1)){ ?>
+                                                                    <?php if(in_array(end($imgextention),array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF')) || ($details->file_type==1)){ ?>
                                                                     <input type="hidden" class="srcimg" value="<?=base_url().'assets/img/icon/not-available.jpg';?>">
                                                                     <img style="width: 100%;height: 150px;" class="img imageVideo" src="<?=(getFieldVal('awareness_image',$details)!='')?base_url().getFieldVal('awareness_image',$details):base_url().'assets/img/icon/not-available.jpg';?>" >
                                                                         <div class="iframediv">

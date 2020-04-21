@@ -71,7 +71,7 @@ class Vaccine extends MY_Controller {
 			$dose=$this->vaccine_model->loadVaccineDoseDataById($ID);
 			$this->mode='Edit';
 		}
-
+                $data['vaccine_package_code']=$this->vaccine_model->getvaccinePackageCode();
 		$data['details']=$vaccine;
 		$data['dose']=$dose;
 		$data['main_page']=$this->main_page;
@@ -96,7 +96,7 @@ class Vaccine extends MY_Controller {
 			$dose=$this->vaccine_model->loadVaccineDoseDataById($ID);
 			$this->mode='View';
 		}
-
+                $data['vaccine_package_code']=$this->vaccine_model->getvaccinePackageCode();
 		$data['details']=$vaccine;
 		$data['dose']=$dose;
 		$data['main_page']=$this->main_page;
