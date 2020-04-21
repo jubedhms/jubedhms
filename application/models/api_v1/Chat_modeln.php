@@ -9,7 +9,7 @@ class chat_modeln extends CI_Model {
     }
     
     function get_question(){
-        $query=$this->db->select('ID,question,question_type,sub_parent')->from($this->main_table)->where(array('ID'=>1,'is_deleted'=>0))->get();
+        $query=$this->db->select('ID,question,question_vi,question_type,sub_parent')->from($this->main_table)->where(array('ID'=>1,'is_deleted'=>0))->get();
         if($query->num_rows()>0){
             $data=array($query->row_array());
            return $data;
@@ -19,7 +19,7 @@ class chat_modeln extends CI_Model {
         
     }
 	function get_questionadmin(){
-        $query=$this->db->select('ID,question,question_type,sub_parent')->from($this->main_table)->where(array('ID'=>1,'is_deleted'=>0))->get();
+        $query=$this->db->select('ID,question,question_vi,question_type,sub_parent')->from($this->main_table)->where(array('ID'=>1,'is_deleted'=>0))->get();
         if($query->num_rows()>0){
             $data=$query->row();
            return $data;
