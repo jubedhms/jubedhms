@@ -319,7 +319,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 			<div class="form-group">
 				<label for="end_date" class="">End Date *  </label>
 				<input id="end_date" name="end_date" class="form-control end_date_title" required="required" type="text" 
-					value="<?=isset($details->end_date)?date('Y-m-d',strtotime($details->end_date)):date('Y-m-d');?>"
+					value="<?=isset($details->end_date)?date('Y-m-d',strtotime($details->end_date)):'';?>"
 					data-rule-required="true" data-msg-required="Please select end date.">
  				<span class="error" style="display: none;">
 					<i class="error-log fa fa-exclamation-triangle"></i>
@@ -473,7 +473,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 						<div class="change_eng col-md-12">
 							<div class="form-group">
 								<label for="description" class="">English</label>
-                                                                <div class="">
+                                                                <div class="" style="display:none;">
                                                                         <div class="">
                                                                         <span class="btn btn-xs btn-info" onclick="uploadeditorfilrclick();">Upload file to get link for insert image</span>
                                                                         <input class="urllink form-control" style="display: none;" type="text" name="url link" style="width: 100%;">

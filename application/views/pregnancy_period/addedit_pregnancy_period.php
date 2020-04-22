@@ -95,7 +95,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 						<div class="row">
 							<div class=" <?php echo ($ID!='')?'col-md-12':'col-md-12' ?>  ">
 							<div class="form-group">
-									<label for="pregnancy_week" class="">Pregnancy Week *</label>
+									<label for="" class="">Pregnancy Week *</label>
 									<select class="form-control select2 pregnancy_week" id="pregnancy_week" placeholder="Select" name="pregnancy_week[]" multiple>
 									<!--<option value="">Select pregnancy week</option>-->
 									<?php $pweeks=isset($details->pregnancy_week)?explode(',',$details->pregnancy_week):array();
@@ -293,7 +293,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 								<label for="description" class="">Content *</label>
                                                                 <span class="description_error" style="display: none; color:red;">Please enter content.</span>
 								<!--<textarea name="description" id="description" class="form-control" data-toggle="wysiwyg"><?php //getFieldVal('description',$details)?></textarea>-->
-                                                                <div class="">
+                                                                <div class="" style="display:none;">
                                                                         <div class="">
                                                                         <span class="btn btn-xs btn-info" onclick="uploadeditorfilrclick();">Upload file to get link for insert image</span>
                                                                         <input class="urllink form-control" style="display: none;" type="text" name="url link" style="width: 100%;">
