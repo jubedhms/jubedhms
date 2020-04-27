@@ -27,9 +27,10 @@ class Hospital_location_model extends CI_Model {
         
         $insertData=array(  
             'name'=>$name,
+            'name_vi'=>$name_vi,
             'code'=>$code,
             'country_code'=>$country_code,
-            'description'=>$description,
+            //'description'=>$description,
             'maker_id'=>$LOGINID,
             'maker_date'=>$curr_date,
             'updater_id'=>$LOGINID,
@@ -49,9 +50,10 @@ class Hospital_location_model extends CI_Model {
   		
         $updateData=array(  
                 'name'=>$name,
+                'name_vi'=>$name_vi,
                 'code'=>$code,
                 'country_code'=>$country_code,
-                'description'=>$description,
+                //'description'=>$description,
                 'updater_id'=>$LOGINID,
                 'updater_date'=>$curr_date
         );

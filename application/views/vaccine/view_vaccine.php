@@ -41,7 +41,7 @@
 	<div class="widget-bg">
 	<div class="widget-body clearfix">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<div class="form-group vaccine_name_b">
                                         <?php if($ID!=''){ ?>
                                         <input type="hidden" name="ID" value="<?=$ID; ?>">
@@ -60,7 +60,7 @@
 					</span>
 				</div>
 			</div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
 				<div class="form-group">
 					<label for="vaccine_code" class="vaccine_code_b">Vaccine Code *</label>
 					<input type="text" class="form-control" id="vaccine_code" name="vaccine_code" value="<?= getFieldVal('vaccine_code',$details);?>" data-rule-required="true" data-msg-required="Please include vaccine code.">
@@ -70,8 +70,8 @@
 				</div>
                     </div>
                 </div>
-		<div class="row vaccine_short_name_b">
-			<div class="col-md-10">
+		<div class="row ">
+			<div class="col-md-6 vaccine_short_name_b">
 				<div class="form-group">
 					<label for="vaccine_short_name" class="">Vaccine Short Name *</label>
 					<input type="text" class="form-control" id="vaccine_short_name" name="vaccine_short_name" value="<?= getFieldVal('vaccine_short_name',$details);?>" data-rule-required="true" data-msg-required="Please include vaccine short name  ">
@@ -80,9 +80,29 @@
 					</span>
 				</div>
 			</div>
-                </div>
+			<div class="col-md-6 vaccine_short_name_vi_b" style="display:none;">
+				<div class="form-group">
+					<label for="vaccine_short_name_vi" class="">TÊN VIẾT TẮT</label>
+					<input type="text" class="form-control" id="vaccine_short_name_vi" name="vaccine_short_name_vi" value="<?= getFieldVal('vaccine_short_name_vi',$details);?>">
+					<span class="error" style="display: none;">
+					<i class="error-log fa fa-exclamation-triangle"></i>
+					</span>
+				</div>
+			</div>
+                        <div class="col-md-6">
+				<div class="form-group">
+                                <label for="vaccine_package_code" class="vaccine_package_code">Vaccine Package Code</label>
+				<select class="form-control" id="vaccine_package_code" name="vaccine_package_code">
+					<option value="">Select</option>
+					<?php if(!empty($vaccine_package_code)){ foreach ($vaccine_package_code as $vacrow){ ?>
+                                        <option value="<?php echo $vacrow->code ;?>" <?php echo (getFieldVal('vaccine_package_code',$details)==$vacrow->code)?"selected":"";?>><?php echo $vacrow->code ?></option>
+                                        <?php } } ?>
+				</select>
+                                </div>
+			</div>
+                    </div>
 		<div class="row vaccine_short_name_vi_b" style="display:none;">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<div class="form-group">
 					<label for="vaccine_short_name_vi" class="">TÊN VIẾT TẮT</label>
 					<input type="text" class="form-control" id="vaccine_short_name_vi" name="vaccine_short_name_vi" value="<?= getFieldVal('vaccine_short_name_vi',$details);?>">
@@ -93,7 +113,7 @@
 			</div>
                 </div>
 		<div class="row ">
-			<div class="col-md-10 disease_name_b">
+			<div class="col-md-12 disease_name_b">
 				<div class="form-group">
 					<label for="disease_name" class="">Disease Name *</label>
 					<input type="text" class="form-control" id="disease_name" name="disease_name" value="<?= getFieldVal('disease_name',$details);?>" data-rule-required="true" data-msg-required="Please include disease name  ">
@@ -102,7 +122,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-10 disease_name_vi_b" style="display:none;">
+			<div class="col-md-12 disease_name_vi_b" style="display:none;">
 				<div class="form-group">
 					<label for="disease_name_vi" class="">PHÒNG BỆNH</label>
 					<input type="text" class="form-control" id="disease_name_vi" name="disease_name_vi" value="<?= getFieldVal('disease_name_vi',$details);?>">
@@ -113,7 +133,7 @@
 			</div>
                 </div>
 		<div class="row ">
-			<div class="col-md-4 origin_b">
+			<div class="col-md-6 origin_b">
 				<div class="form-group">
 					<label for="origin" class="">Origin *</label>
 					<input type="text" class="form-control" id="vaccine_origin" name="vaccine_origin" value="<?= getFieldVal('vaccine_origin',$details);?>" data-rule-required="true" data-msg-required="Please include vaccine origin.">
@@ -122,7 +142,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-md-4 origin_vi_b" style="display:none;">
+			<div class="col-md-6 origin_vi_b" style="display:none;">
 				<div class="form-group">
 					<label for="vaccine_origin_vi" class="">XUẤT XỨ</label>
 					<input type="text" class="form-control" id="vaccine_origin_vi" name="vaccine_origin_vi" value="<?= getFieldVal('vaccine_origin_vi',$details);?>" >
@@ -131,11 +151,8 @@
 					</span>
 				</div>
 			</div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                        </div>
-                    </div>
-			<div class="col-md-4">
+                    
+			<div class="col-md-6">
 				<div class="form-group">
                                 <label for="available_status" class="available_status_b">Status  *</label>
 				<select class="form-control" id="available_status" name="available_status" required="required" data-rule-required="true" data-msg-required="Please select available status.">
@@ -302,6 +319,7 @@
             $('.dose_frommonth_b').text('Từ tháng');
             $('.dose_tomonth_b').text('Đến tháng');
             $('.dose_adddelete_b').text('Thêm/ Xóa');
+            $('.vaccine_package_code').text('MÃ GÓI VACCINE');
             
             $('.vaccine_name_b').hide();
             $('.vaccine_name_vi_b').show();
@@ -323,6 +341,7 @@
             $('.dose_frommonth_b').text('From Month');
             $('.dose_tomonth_b').text('To Month');
             $('.dose_adddelete_b').text('Add/Delete');
+            $('.vaccine_package_code').text('VACCINE PACKAGE CODE ');
             
             $('.vaccine_name_b').show();
             $('.vaccine_name_vi_b').hide();
