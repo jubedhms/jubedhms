@@ -179,6 +179,28 @@ class Awareness_model extends CI_Model {
         if($this->input->post('end_date')){
             $this->db->where("A.end_date <=",$this->input->post('end_date'));
         }
+		$status=$this->input->post('status');
+        if($status){ 
+            $this->session->set_userdata('status',$status);
+        }else{
+            $this->session->unset_userdata('status');
+        }
+        if($status==1){ //Expired
+            $this->db->where("A.end_date<",date('Y-m-d'));
+        }
+        
+        if($status==2){ //Scheduled
+            $this->db->where("A.start_datetime>",date('Y-m-d H:i:s'));
+            $this->db->where("A.show_status",1);
+        }
+        if($status==3){ //Published
+            $this->db->where("A.start_datetime<=",date('Y-m-d H:i:s'));
+            $this->db->where("A.end_date>=",date('Y-m-d'));
+            $this->db->where("A.show_status",1);
+        }
+        if($status==4){ //Draft
+            $this->db->where("A.show_status",0);
+        }
         $this->db->where("A.is_deleted",0);
         $this->db->order_by('A.ID','DESC');
         $result=$this->db->get();
@@ -592,7 +614,11 @@ class Awareness_model extends CI_Model {
             if($resultData!==false){
                 if($oldfile_name!='')remove_uploaded_file($oldfile_name);
                 $newFileName=$dest.$resultData['upload_data']['file_name'];
-				$this->resize_file($resultData['upload_data']['file_name']);
+				if($imgext[1]=='gif' || $imgext[1]=='GIF'){
+                    
+                }else{
+                    $this->resize_file($resultData['upload_data']['file_name']);
+                }
                 $updateArray = array("awareness_image"=>$newFileName);
                 $this->db->where('MD5(ID)',$ID);
                 $successData = $this->db->update($this->main_table,$updateArray);

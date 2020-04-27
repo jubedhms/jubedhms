@@ -424,7 +424,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
                                                         <input type="file" class="form-control imageVideo <?php echo ($details->file_type==1)?'':'hidden'; ?>" <?php echo ($details->file_type==1)?'':'disabled'; ?> id="awareness_image" name="awareness_image">
                                                          </div>
                                                         <input type="text" class="form-control youtube <?php echo ($details->file_type==3)?'':'hidden'; ?>" <?php echo ($details->file_type==3)?'':'disabled'; ?> id="youtube_link" name="youtube_link" value="<?php echo ($details->file_type==3)?$details->awareness_image:''; ?>">
-                                                        <!--<span class="imageVideo hidden" style="color: #8cc63f;font-size: 12px;">Note: Please upload the image of dimension 500X250 only.</span>-->
+                                                        <span class="imageVideo hidden" style="color: #8cc63e;font-size: 12px;">Note: Please upload the image of dimension 500X250 only.</span>
                                                         <span class="error" style="display: none;">
                                                                 <i class="error-log fa fa-exclamation-triangle"></i>
                                                         </span>
@@ -460,7 +460,7 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
                                                                 <input type="file" class="form-control imageVideo hidden" disabled id="awareness_image" name="awareness_image" data-rule-required="true">
                                                                 </div>
                                                                 <input type="text" class="form-control youtube" id="youtube_link" name="youtube_link" <?php if($ID==''){ ?>  data-rule-required="true" <?php } ?>>
-								
+																<span class="imageVideo hidden" style="color: #8cc63e;font-size: 12px;">Note: Please upload the image of dimension 500X250 only.</span>
 								<span class="error" style="display: none;">
 									<i class="error-log fa fa-exclamation-triangle"></i>
 								</span> 
@@ -473,8 +473,9 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 						<div class="change_eng col-md-12">
 							<div class="form-group">
 								<label for="description" class="">English</label>
-                                                                <div class="" style="display:none;">
-                                                                        <div class="">
+								<p style="color: #80cc28" style="display:none;"><strong>Note: </strong><span> Please enter some text in below description before inserting any image so that it looks good in app.</span></p>
+                                                                <div class="">
+                                                                        <div class="" style="display:none;">
                                                                         <span class="btn btn-xs btn-info" onclick="uploadeditorfilrclick();">Upload file to get link for insert image</span>
                                                                         <input class="urllink form-control" style="display: none;" type="text" name="url link" style="width: 100%;">
                                                                        </div>
@@ -489,8 +490,9 @@ $curr_url=$url1.'/'.$url2.'/'.$url3.'/'.$url4;
 						<div class="change_vit col-md-12" style="display:none;"> 
 							<div class="form-group">
 								<label for="description_vi" class="">Tiếng Việt</label>
+								<p style="color: #80cc28" style="display:none;"><strong>Note: </strong><span> Please enter some text in below description before inserting any image so that it looks good in app.</span></p>
 								<div class="">
-                                                                        <div class="">
+                                                                        <div class="" style="display:none;">
                                                                         <span class="btn btn-xs btn-info" onclick="uploadeditorfilrclick();">Tải lên tập tin để nhận liên kết để chèn hình ảnh</span>
                                                                         <input class="urllink form-control" style="display: none;" type="text" name="url link" style="width: 100%;">
                                                                        </div>

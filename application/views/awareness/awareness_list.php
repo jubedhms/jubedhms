@@ -52,11 +52,10 @@
             </select> entries
         </label>
     </div>
- <div style="height: 314px;overflow: scroll;">
+ <div style="height: 500px;overflow: scroll;">
 <table class="table table-striped table-responsive table-bordered" style="font-size: 12px;">
 			<thead>
-				<tr>
-                                        <th style="width:10%;vertical-align: top;" class="pre_css">#</th>
+				<th style="width:10%;vertical-align: top;" class="pre_css">#</th>
 					<?php if(checkModulePermission($MODULEID,'delete_btn')){ ?>
                                     
 					<th class="th-no-sort" data-sortable="false">
@@ -180,7 +179,7 @@
 					<td class="pre_css" style=" text-align: center;vertical-align: middle;"><?php echo ($data->file_type==1)?'Article':'Video clip';?></td>
 					<td style="text-align: center;">
                                             <?php if($data->awareness_image){ ($data->awareness_image)?$imgextention=explode('.',$data->awareness_image):array(); ?>
-                                            <?php if(in_array(end($imgextention),array('jpg','JPG','jpeg','JPEG','png','PNG','gif','GIF'))){ ?>
+                                            <?php if(in_array(end($imgextention),array('jpg','jpeg','png','gif'))){ ?>
                                             <img width="100" height="60" class="img" src="<?php echo base_url().$data->awareness_image;?>" >
                                                 
                                                 <?php }else{
@@ -188,7 +187,9 @@
                                                 ?>
                                                 <iframe width="100" height="60" src="<?php echo 'https://www.youtube.com/embed/'.end($youtubelink);?>" frameborder="0">
                                                 </iframe>
-                                            <?php } } ?>
+                                            <?php } }else{ ?>
+                                            <img width="100" height="60" class="img" src="<?php echo base_url().(($data->awareness_image)?$data->awareness_image:'assets/img/icon/not-available.jpg');?>" >
+                                            <?php }  ?>
                                             
                                             
 					</td>
