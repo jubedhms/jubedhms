@@ -215,7 +215,7 @@ class Dashboard_model extends CI_Model {
 
     // for patient info user gender excel
     function patient_profile_infoExcel(){
-        $query=$this->db->select('prn,first_name,middle_name,last_name,username,email_id,contact_number,gender,dob,marital_status,religious,weight,height')->from('patient')->where('is_deleted','0')->get();
+        $query=$this->db->select('P.prn,P.first_name,P.middle_name,P.last_name,P.username,P.email_id,P.contact_number,P.gender,P.dob,P.marital_status,P.religious,P.weight,P.height,P.emergency_contact,P.patient_group,P.blood_group,P.maker_date,P.default_language,P.glucose,P.heart_rate,P.blood_pressure,PA.address_line1,PA.address_line2,PA.ward,PA.street,C.name as country,PR.name as province,CTY.name as city,D.name as district,PA.district_other')->from('patient as P')->join('patient_address as PA','PA.patient_id=P.ID', 'left')->join('countries as C','PA.country_code=C.ID', 'left')->join('districts as D','PA.district_code=D.ID', 'left')->join('provinces as PR','PA.province_code=PR.ID', 'left')->join('cities as CTY','PA.city_code=CTY.ID', 'left')->where('P.is_deleted','0')->get();
         //print_r($query->result());die;
         if($query->num_rows()>0){
             return $query->result_array();
