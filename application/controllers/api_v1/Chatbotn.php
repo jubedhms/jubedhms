@@ -51,7 +51,7 @@ class Chatbotn extends  REST_Controller {
 				$datetime_question=$this->input->post('datetime_question');
 				$datetime_question=(isset($datetime_question))?$datetime_question:'0';
 				$username=isset($_POST['username']) ?($_POST['username']) : "";
-				$query=isset($_POST['query']) ?($_POST['query']) : "";
+				$query=isset($_POST['query']) ?trim($_POST['query']) : "";
 				if($username!='' && $query!=''){
 					$is_existed=$this->patient_model->checkExist($username);	
 						if($is_existed==true){
