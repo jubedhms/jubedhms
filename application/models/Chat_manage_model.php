@@ -95,7 +95,7 @@ class Chat_manage_model extends CI_Model {
         }
         $this->db->where("Q.is_deleted",0);
         $this->db->where("Q.ID>",39);
-        $ignore = array(65,66,67,68,69,71,107,108);
+        $ignore = array(55,65,66,67,68,69,71,107,108);
         $this->db->where_not_in('Q.ID', $ignore);
         $this->db->order_by('Q.ID','DESC');
         $result=$this->db->get();
