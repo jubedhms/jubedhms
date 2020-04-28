@@ -309,7 +309,7 @@ function uploadImg($imgName='',$dest=''){
 			$width = $size[0];
 			$height = $size[1];
 
-		if($width>=600 && $height>=600){
+		if($width>=900 && $height>=900){
 		//determine what the file extension of the source
 		//image is
 

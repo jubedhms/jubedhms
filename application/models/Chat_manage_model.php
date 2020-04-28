@@ -22,7 +22,7 @@ class Chat_manage_model extends CI_Model {
                 $wheresearch="Q.ID not in($dataids->ids)";
                 //$wheresearch="where (A.`answer`='' || A.`answer_vi`='')";
             }
-            $ids2=$this->db->query("SELECT GROUP_CONCAT(Q.ID) as ids2 FROM hms_chatbot_questions as Q where $wheresearch and Q.ID>39 and Q.sub_parent='0'")->row();
+            $ids2=$this->db->query("SELECT GROUP_CONCAT(Q.ID) as ids2 FROM hms_chatbot_questions as Q where $wheresearch and Q.ID>39 and Q.ID not in(37,38,39,55,65,66,67,68,69,71,107,108) and Q.sub_parent='0'")->row();
             //echo $this->db->last_query();die;
             //print_r($ids2->ids2);die;
             if(!empty($ids2)){
@@ -56,6 +56,8 @@ class Chat_manage_model extends CI_Model {
             //$this->db->or_where_not_in('Q.ID',$ids,false);
         }
         $this->db->where("Q.ID>",36);
+        $ignore = array(37,38,39,55,65,66,67,68,69,71,107,108);
+        $this->db->where_not_in('Q.ID', $ignore);
         $this->db->where("Q.is_deleted",0);
         $this->db->order_by('Q.ID','DESC');
         $this->db->limit($limit, $start);
@@ -77,7 +79,7 @@ class Chat_manage_model extends CI_Model {
                 $wheresearch="Q.ID not in($dataids->ids)";
                 //$wheresearch="where (A.`answer`='' || A.`answer_vi`='')";
             }
-            $ids2=$this->db->query("SELECT GROUP_CONCAT(Q.ID) as ids2 FROM hms_chatbot_questions as Q where $wheresearch and Q.ID>39")->row();
+            $ids2=$this->db->query("SELECT GROUP_CONCAT(Q.ID) as ids2 FROM hms_chatbot_questions as Q where $wheresearch and Q.ID>39 and Q.ID not in(37,38,39,55,65,66,67,68,69,71,107,108)")->row();
             //echo $this->db->last_query();die;
             //print_r($ids2->ids2);die;
             if(!empty($ids2)){
@@ -93,6 +95,8 @@ class Chat_manage_model extends CI_Model {
         }
         $this->db->where("Q.is_deleted",0);
         $this->db->where("Q.ID>",36);
+        $ignore = array(37,38,39,65,66,67,68,69,71,107,108);
+        $this->db->where_not_in('Q.ID', $ignore);
         $this->db->order_by('Q.ID','DESC');
         $result=$this->db->get();
         if($result->num_rows()>0){
