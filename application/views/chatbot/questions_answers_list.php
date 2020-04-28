@@ -62,10 +62,10 @@
 					<?php } ?>
 					
                      
-					<th style="" class="th-action" >Question English</th>
-					<th style="" class="th-action" >Answer English</th>
-					<th style="" class="th-action" >Question Vietnamese</th>
-					<th style="" class="th-action" >Answer Vietnamese</th>
+					<th style="text-align:left;white-space: pre;" class="th-action" >Question English</th>
+					<th style="text-align:left;white-space: pre;" class="th-action" >Answer English</th>
+					<th style="text-align:left;white-space: pre;" class="th-action" >Question Vietnamese</th>
+					<th style="text-align:left;white-space: pre;" class="th-action" >Answer Vietnamese</th>
 					<th style="text-align: center;vertical-align: top;" class="th-action" >Action</th>
 				</tr>
 			</thead>
@@ -75,24 +75,24 @@
 				if($details && count($details)>0){
 				foreach($details as $data){?>		
 				<tr>
-                                        <td style="text-align: center;width:10px;"><?php echo $sr; ?></td>
-                                        <td style=""><?php echo $data->question; ?></td>
-                                        <td style="">
+                                        <td style="text-align: center;vertical-align:middle;width:10px;"><?php echo $sr; ?></td>
+                                        <td style="text-align: left;vertical-align:middle;"><?php echo $data->question; ?></td>
+                                        <td style="text-align: left;vertical-align:middle;">
                                             <?php  $answer=getoption($data->ID,'en');
                                             if(!empty($answer)){ $i=1;
                                                 foreach($answer as $row){ ?>
                                                     <p><span style="color: #00b1f3; "><?php echo (isset($row->answer) && @count($answer)>1)?$i++.". ":''; ?></span><?php echo isset($row->answer)?$row->answer:''; ?></p>
                                               <?php } } ?>
                                         </td>
-                                        <td style=""><?php echo $data->question_vi; ?></td>
-                                        <td style="">
+                                        <td style="text-align: left;vertical-align:middle;"><?php echo $data->question_vi; ?></td>
+                                        <td style="text-align: left;vertical-align:middle;">
                                             <?php  $answer_vi=getoption($data->ID,'vi');
                                             if(!empty($answer_vi)){ $j=1;
                                                 foreach($answer_vi as $row){ ?>
                                             <p><span style="color: #00b1f3; "><?php echo (isset($row->answer_vi) && @count($answer_vi)>1)?$j++.". ":''; ?></span><?php echo isset($row->answer_vi)?$row->answer_vi:''; ?></p>
                                               <?php } } ?>
                                         </td>
-					<td style="text-align: center;width:50px;">
+					<td style="text-align: center;vertical-align:middle;width:50px;">
 						<div class="dropdown" style="">
 						    <a href="#" class="btn btn-circle btn-outline-info fs-20 mr-2 mr-0-rtl ml-2-rtl dropdown-toggle" data-toggle="dropdown" title="Click" style="width: 33px;height: 33px;">
 								<i class="fa fa-ellipsis-v" style="font-size:24px"></i>
