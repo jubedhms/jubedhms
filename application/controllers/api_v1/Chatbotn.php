@@ -52,6 +52,7 @@ class Chatbotn extends  REST_Controller {
 				$datetime_question=(isset($datetime_question))?$datetime_question:'0';
 				$username=isset($_POST['username']) ?($_POST['username']) : "";
 				$query=isset($_POST['query']) ?trim($_POST['query']) : "";
+				$language=isset($_POST['language']) ?trim($_POST['language']) : "en";
 				if($username!='' && $query!=''){
 					$is_existed=$this->patient_model->checkExist($username);	
 						if($is_existed==true){
@@ -108,7 +109,7 @@ class Chatbotn extends  REST_Controller {
                                                             );
                                                     $this->chat_modeln->SaveUserChats($data);
                                                     if($countsubparent>=6){
-                                                        $ifexist=$this->chat_modeln->FindUserQuery($message,$username);
+                                                        $ifexist=$this->chat_modeln->FindUserQuery($message,$username,$language);
                                                         if($ifexist!=''){
                                                         $data=  array(
                                                             "username"=>$username,
@@ -902,6 +903,9 @@ class Chatbotn extends  REST_Controller {
                                             "is_support"=>1
                                             );
                                     $this->chat_modeln->SaveUserChats($data);
+                                    if($subparent=='helpm' || $subparent=='helpa' || $subparent=='helpe'){
+                                        $date_time=date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s")." -1 days"));
+                                    }
                                     $data=  array(
                                             "username"=>$username,
                                             "subparent"=>$subparent,
@@ -926,7 +930,7 @@ class Chatbotn extends  REST_Controller {
                                             "is_seen"=>0,
                                             "is_support"=>1
                                             );
-                                    $this->chat_modeln->SaveUserChats($data);
+                                    //$this->chat_modeln->SaveUserChats($data);
                                     }
                                 }else{
                                     $data=   array(

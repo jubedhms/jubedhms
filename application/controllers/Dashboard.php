@@ -402,9 +402,9 @@ class Dashboard extends MY_Controller {
         $i=1;
         foreach ($data as $row) {
                 $exdata[$j]['PRN']=$row['prn'];
-                $exdata[$j]['Full Name']=$row['first_name'].' '.$row['middle_name'].' '.$row['last_name'];
-                //$exdata[$j]['Middle Name']=$row['middle_name'];
-                //$exdata[$j]['Last Name']=$row['last_name'];
+                $exdata[$j]['First Name']=$row['first_name'];//.' '.$row['middle_name'].' '.$row['last_name'];
+                $exdata[$j]['Middle Name']=$row['middle_name'];
+                $exdata[$j]['Last Name']=$row['last_name'];
                 $exdata[$j]['User Name']=$row['username'];
                 $exdata[$j]['Email Id']=$row['email_id'];
                 $exdata[$j]['Contact Number']=$row['contact_number'];
@@ -421,15 +421,13 @@ class Dashboard extends MY_Controller {
                 $exdata[$j]['Glucose']=$row['glucose'];
                 $exdata[$j]['Heart Rate']=$row['heart_rate'];
                 $exdata[$j]['Blood Pressure']=$row['blood_pressure'];
-                $exdata[$j]['Aaddress Line1']=$row['address_line1'];
-                $exdata[$j]['Aaddress Line2']=$row['address_line2'];
+                $exdata[$j]['Address']=$row['address_line1'];
                 $exdata[$j]['Ward']=$row['ward'];
                 $exdata[$j]['Street']=$row['street'];
-                $exdata[$j]['Country']=$row['country'];
+                $exdata[$j]['Nationality']=$row['country'];
                 $exdata[$j]['Province']=$row['province'];
                 $exdata[$j]['City']=$row['city'];
                 $exdata[$j]['District']=$row['district'];
-                $exdata[$j]['District Other']=$row['district_other'];
                 
                 $exdata[$j]['Sign up Date']=$row['maker_date'];
                 $exdata[$j]['Default Language']=($row['default_language']=='en')?'English':'Vietnamese';

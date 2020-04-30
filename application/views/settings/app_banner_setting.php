@@ -111,6 +111,8 @@ select.dropdown {
     border-color: #00b1f3 !important;
 }
 .pleft a{color: #00b1f3 !important;}
+.sizeimage{pointer-events:none;opacity:.5}
+.active{color: #fff !important;}
 </style>
 
 <main class="main-wrapper clearfix">
@@ -156,7 +158,7 @@ select.dropdown {
 </div>
                 <div class="widget-bg-transparent">
                     <div class="widget-body">
-                        <h5 class="box-title">Tour Guide (default 6 photos)</h5>
+                        <h5 class="box-title">Tour Guide (default 7 photos)</h5>
                         <div class="row" >
                             <?php $id_with_row=0;
                             $tour_guide=$this->db->order_by('short_by','asc')->get_where('app_banner_setting',array('module_name'=>'tour_guide'))->result();
@@ -237,7 +239,7 @@ select.dropdown {
 
                         <div class="row">
                             <div class="col-md-3 mr-b-30 tourg_box">
-                                <h5 class="box-title" align="center">Login (1 photos)</h5>
+                                <h5 class="box-title" align="center">Login (1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -258,7 +260,7 @@ select.dropdown {
                                 </div>
                             </div>  
                             <div class="col-md-3 mr-b-30 tourg_box">
-                                <h5 class="box-title" align="center">Registration (1 photos))</h5>
+                                <h5 class="box-title" align="center">Registration (1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -280,7 +282,7 @@ select.dropdown {
                             </div>  
                             
                             <div class="col-md-3 mr-b-30 tourg_box">
-                                    <h5 class="box-title" align="center">Send OTP (1 photos)</h5>
+                                    <h5 class="box-title" align="center">Send OTP (1 photo)</h5>
                                     <div class="card blog-post-new">
                                     <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                             <figure>
@@ -303,7 +305,7 @@ select.dropdown {
                             </div>  
                             
                             <div class="col-md-3 mr-b-30 tourg_box">
-                                <h5 class="box-title" align="center">Match OTP (1 photos)</h5>
+                                <h5 class="box-title" align="center">Match OTP (1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -326,7 +328,7 @@ select.dropdown {
                             </div>  
                             
                         <div class="col-md-3 mr-b-30 tourg_box">
-                                <h5 class="box-title" align="center">Reset Password OTP <br>(1 photos)</h5>
+                                <h5 class="box-title" align="center">Reset Password OTP <br>(1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -350,7 +352,7 @@ select.dropdown {
                             
                             
                             <div class="col-md-3 mr-b-30 tourg_box">
-                                    <h5 class="box-title" align="center">Reset Password Match OTP<br> (1 photos)</h5>
+                                    <h5 class="box-title" align="center">Reset Password Match OTP<br> (1 photo)</h5>
                                     <div class="card blog-post-new">
                                     <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                             <figure>
@@ -554,7 +556,7 @@ select.dropdown {
                         <div class="row">
                             
                             <div class="col-md-3 mr-b-30 haw_box">
-                                        <h5 class="box-title" align="center">Health Awareness <br>(1 photos)</h5>
+                                        <h5 class="box-title" align="center">Health Awareness <br>(1 photo)</h5>
                                         <div class="card blog-post-new">
                                         <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                                 <figure>
@@ -579,7 +581,7 @@ select.dropdown {
 
                             
                             <div class="col-md-3 mr-b-30 haw_box">
-                                <h5 class="box-title" align="center">Due Date <br>(1 photos)</h5>
+                                <h5 class="box-title" align="center">Due Date <br>(1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -604,7 +606,7 @@ select.dropdown {
 
                             
                             <div class="col-md-3 mr-b-30 haw_box">
-                                <h5 class="box-title" align="center">Home Screen<br>(1 photos)</h5>
+                                <h5 class="box-title" align="center">Home Screen<br>(1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -1328,7 +1330,7 @@ select.dropdown {
                     <div class="widget-body">
                         <div class="row">
                             <div class="col-md-3 mr-b-30 fertility_box">
-                                <h5 class="box-title" align="center">Fertility <br>(1 photos)</h5>
+                                <h5 class="box-title" align="center">Fertility <br>(1 photo)</h5>
                                 <div class="card blog-post-new">
                                     <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                             <figure>
@@ -1351,7 +1353,7 @@ select.dropdown {
                             </div> 
                             
                             <div class="col-md-3 mr-b-30 haw_box">
-                                <h5 class="box-title" align="center">Reset Password<br>(1 photos)</h5>
+                                <h5 class="box-title" align="center">Reset Password<br>(1 photo)</h5>
                                 <div class="card blog-post-new">
                                 <div class="card-header sub-heading-font-family border-bottom-0 p-0">
                                         <figure>
@@ -1471,7 +1473,7 @@ select.dropdown {
                                 </div>
                                 <div class="modal-footer">
                                     <!--<span class="btn btn-success btn-rounded ripple text-left submit">Save</span>-->
-                                    <button type="button" class="btn btn-success btn-rounded ripple text-left saveimage_n upload_save">Save</button>
+                                    <button type="button" class="btn btn-success btn-rounded ripple text-left saveimage_n upload_save sizeimage">Save</button>
                                     <button type="button" class="btn btn-danger btn-rounded ripple text-left" data-dismiss="modal">Cancel</button>
                                 </div>
                             </form>
@@ -1700,12 +1702,12 @@ select.dropdown {
                 $imaged.on('load', function () {
                     var ewidth = $("#imgpreview").attr('wth');
                     var eheight = $("#imgpreview").attr('hth');
-                    //if ($imaged.width() == ewidth && $imaged.height() == eheight) {
-
-                    //} else {
-                       // $(".imagesrc").val('');
-                       // alert('Image dimention is not correct. Please upload the exact dimensions(' + ewidth + 'X' + eheight + ') image.');
-                    //}
+                    if ($imaged.width() == ewidth && $imaged.height() == eheight) {
+                            $('.upload_save').removeClass('sizeimage');
+                    } else {
+                        $(".imagesrc").val('');
+                        alert('Image dimention is not correct. Please upload the exact dimensions(' + ewidth + 'X' + eheight + ') image.');
+                    }
                 });
                 //end
             }

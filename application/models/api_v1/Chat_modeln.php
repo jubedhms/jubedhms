@@ -288,7 +288,9 @@ class chat_modeln extends CI_Model {
         }
     }
     
-    function FindUserQuery($query,$username){
+    function FindUserQuery($query,$username,$language){
+        
+        if($language=='en'){
         $querydt=$this->db->select('*')->from($this->main_table)->where(array('question like '=>"$query%",'is_deleted'=>0))->get();
         if($querydt->num_rows()>0){
             $data=$querydt->row();
@@ -303,6 +305,23 @@ class chat_modeln extends CI_Model {
             $this->db->insert($this->main_table,$data);
             return false;
         }
+        
+    }else{
+        $querydt=$this->db->select('*')->from($this->main_table)->where(array('question_vi like '=>"$query%",'is_deleted'=>0))->get();
+        if($querydt->num_rows()>0){
+            $data=$querydt->row();
+            $query2=$this->db->select('*')->from('chatbot_answers')->where(array('is_deleted'=>0))->where('find_in_set("'.$data->ID.'",parent_id) !=',0)->get();
+            if($query2->num_rows()>0){
+                return $query2->row()->answer_vi;
+            }else{
+                return false;
+            }
+        }else{
+            $data=array("question_vi"=>$query,"query_by_user"=>$username,"parent"=>0,"sub_parent"=>0,"question_type"=>3,"level"=>0,"is_deleted"=>0,"status"=>1);
+            $this->db->insert($this->main_table,$data);
+            return false;
+        }
+    }
     }
     
     function checkQuestionAnswer($query,$message){ //check question in database table chatbot question for exist

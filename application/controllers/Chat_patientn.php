@@ -580,6 +580,7 @@ class Chat_patientn extends MY_Controller {
             $message=trim($this->input->post('message'));
             $subparent=($this->input->post('subparent'))?$this->input->post('subparent'):'';
             $question=($this->input->post('question'))?$this->input->post('question'):'';
+            $language=$this->input->post('language')?$this->input->post('language'):'en';
             $date=date('Y-m-d');
             $time=date('H:i:s A');
             $data=$this->chat_modeln->UserChats($username);
@@ -628,7 +629,7 @@ class Chat_patientn extends MY_Controller {
                         );
                 $this->chat_modeln->SaveUserChats($data);
                 if($countsubparent>=6){
-                    $ifexist=$this->chat_modeln->FindUserQuery($message,$username);
+                    $ifexist=$this->chat_modeln->FindUserQuery($message,$username,$language);
                     if($ifexist!=''){
                     $data=  array(
                         "username"=>$username,
